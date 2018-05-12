@@ -1,6 +1,6 @@
 import React from 'react';
 
-const piclinker = ({onInputChange, onButtonSubmit}) => {
+const PicLinker = ({onInputChange, onButtonSubmit}) => {
     return (
         <div>
             <p className='f3'>
@@ -18,4 +18,4 @@ const piclinker = ({onInputChange, onButtonSubmit}) => {
     );
 }
 
-export default piclinker;
+export default PicLinker;

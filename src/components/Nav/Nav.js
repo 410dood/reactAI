@@ -30,5 +30,5 @@ const Nav = ({onRouteChange, isSignedIn}) => {
         );
     }
 }
-
-export default < Nav > </Nav>;
+export default Nav;
+// export default < Nav > </Nav>;

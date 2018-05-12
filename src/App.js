@@ -5,7 +5,7 @@ import Nav from './components/Nav/Nav';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
-import piclinker from './components/piclinker/piclinker';
+import PicLinker from './components/PicLinker/PicLinker';
 import Rank from './components/Rank/Rank';
 import './App.css';
 
@@ -123,7 +123,7 @@ class App extends Component {
           ? <div>
               <Logo/>
               <Rank name={this.state.user.name} entries={this.state.user.entries}/>
-              <piclinker
+              <PicLinker
                 onInputChange={this.onInputChange}
                 onButtonSubmit={this.onButtonSubmit}/>
               <AI box={box} imageUrl={imageUrl}/>
