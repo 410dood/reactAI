@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router';
-import { Navbar } from 'react-bootstrap';
+import {Navbar} from 'react-bootstrap';
 
 class Navigation extends Component {
   render() {
@@ -8,7 +8,7 @@ class Navigation extends Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to='/'>Clarifai Demo</Link>
+            <Link to='/'>HeavyDoodyAI</Link>
           </Navbar.Brand>
         </Navbar.Header>
       </Navbar>
