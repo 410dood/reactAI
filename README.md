@@ -1996,9 +1996,9 @@ If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow
 Now requests to `/todos/42` will be handled correctly both in development and in production.
 
 On a production build, and in a browser that supports [service workers](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers),
-the service worker will automatically handle all navigation requests, like for
+the service worker will automatically handle all Nav requests, like for
 `/todos/42`, by serving the cached copy of your `index.html`. This
-service worker navigation routing can be configured or disabled by
+service worker Nav routing can be configured or disabled by
 [`eject`ing](#npm-run-eject) and then modifying the
 [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)

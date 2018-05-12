@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ai = ({imageUrl, box}) => {
+const AI = ({imageUrl, box}) => {
     return (
         <div className='center ma'>
             <div className="absolute mt2">
@@ -18,4 +18,4 @@ const ai = ({imageUrl, box}) => {
     );
 }
 
-export default ai;
+export default AI;
