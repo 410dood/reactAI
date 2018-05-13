@@ -5,12 +5,12 @@ import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
 import {Router, Route, browserHistory} from 'react-router';
 import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
-import reducer from './clarifai/reducers'
-import Navigation from './clarifai/components/Navigation';
-import Footer from './clarifai/components/Footer';
-import Predict from './clarifai/containers/Predict';
-import App from './clarifai/components/App';
-import Home from './clarifai/components/Home';
+import reducer from './reducers'
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+import Predict from './containers/Predict';
+import App from './components/App';
+import Home from './components/Home';
 
 const middleware = [thunk]
 
