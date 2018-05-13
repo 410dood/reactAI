@@ -172,7 +172,8 @@ class PreviewTags extends Component {
         return <li
           key={x.name}
           style={{
-          opacity: x.value // fade based on confidence }}
+          opacity: x.value
+        }}
           title={`Confidence: ${Math.round(x.value * 100)}%`}>{x.name}</li>
       })
   }
@@ -217,8 +218,7 @@ class App extends Component {
       <React.Fragment>
         <ViewStateMachine
           elements={[ < ViewStateUpload />, < ViewStateLoading />, < ViewStateError />, < ViewStatePreview />
-        ]}/>
-
+        ]}/> {/* //put something sweet here */}
       </React.Fragment>
     )
   }
