@@ -1,78 +1,55 @@
-import React from 'react';
-import classNames from 'classnames';
-import Dropzone from 'react-dropzone';
-import './Modal.css';
+const Express = require('express');
+const Webtask = require('webtask-tools');
+const bodyParser = require('body-parser');
+const cloudinary = require('cloudinary');
+const multipart = require('connect-multiparty');
+var algoliasearch = require('algoliasearch');
+const app = Express();
 
-const modalClass = isActive => classNames({modal: true, 'is-active': isActive});
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-export default({
-    isActive,
-    toggleModal,
-    onDrop,
-    saveImage,
-    preview,
-    description,
-    pending,
-    handleDescriptionChange,
-    handleDropZoneClick
-}) => {
-    const dropZoneProps = {
-        onDrop,
-        onClick: handleDropZoneClick,
-        accept: 'image/jpeg, image/png, image/gif',
-        multiple: false,
-        disableClick: true
-    };
-    return (
-        <div className={modalClass(isActive)}>
-            <div className="modal-background" onClick={toggleModal}/>
-            <div className="modal-content">
-                <div className="modal-card">
-                    <header className="modal-card-head">
-                        <p className="modal-card-title">Upload an image!</p>
-                        <button onClick={toggleModal} className="delete" aria-label="close"/>
-                    </header>
-                    <section className="modal-card-body">
-                        <div className="columns">
-                            <div className="column">
-                                <div className="field">
-                                    <label className="label">Short Description</label>
-                                    <div className="control">
-                                        <textarea
-                                            className="textarea"
-                                            value={description}
-                                            onChange={handleDescriptionChange}
-                                            placeholder="Textarea"/>
-                                    </div>
-                                    <button onClick={saveImage} className="button is-info is-margin-top">
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="column upload-column">
-                                {!preview
-                                    ? (
-                                        <button onClick={handleDropZoneClick} className="button is-info is-margin-top">
-                                            Upload
-                                        </button>
-                                    )
-                                    : (<img src={preview} alt="Preview"/>)}
-                                <div
-                                    className="mainImageLoading"
-                                    style={{
-                                    display: pending
-                                        ? 'block'
-                                        : 'none'
-                                }}/>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-            <button
-                onClick={toggleModal}
-                className="modal-close is-large"
-                aria-label="close"/>
-        </div>
-    );
-};
+// Multipart middleware to parse files
+const multipartMiddleware = multipart();
+
+// Replace credentials with your Cloudinary credentials
+cloudinary.config({cloud_name: 'cloud_name', api_key: 'key', api_secret: 'secret'});
+
+// Configure Algolia with your Algolia credentials
+var algoliaClient = algoliasearch('id', 'key');
+var algoliaIndex = algoliaClient.initIndex('index');
+
+app.post('/upload', multipartMiddleware, function (req, res) {
+    // Upload image to cloudinary
+    cloudinary
+        .v2
+        .uploader
+        .upload(
+        // File to upload
+        req.files.image.path,
+        // AWS tagging transformation Activate here by selecting a plan:
+        // https://cloudinary.com/console/addons#aws_rek_tagging
+        {
+            categorization: 'aws_rek_tagging'
+        },
+        // Callback function
+        function (err, result) {
+            if (err) 
+                return res.send(err);
+            res.json({data: result});
+        });
+});
+
+app.post('/save', function (req, res) {
+    // index record
+    console.log(req.body)
+    algoliaIndex.addObject(req.body, function (err, content) {
+        if (err) 
+            return res.send(err);
+        res.json(content);
+    });
+});
+
+// app.listen('4000', () => console.log('Listening'));
+
+module.exports = Webtask.fromExpress(app);

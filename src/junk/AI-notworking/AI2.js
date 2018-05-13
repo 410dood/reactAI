@@ -57,9 +57,9 @@ export default PredictScreen
 // {type, data} = this.props.navigation.state.params.image         const
 // sourceImage = `data:${type};base64,${data}`         return ( <BackgroundImage
 //             source={{                 uri: sourceImage       }}
-// resizeMode='cover'>                 <StatusBar hidden/> {this.state.loading
-// ? <View style={styles.loader}> <ActivityIndicator size={75} color='#95a5a6'/>
-//                   <Text style={styles.loaderText}>Analyse en cours...</Text>
+// resizeMode='cover'>                 <StatusBar hidden/> {this.state.loading ?
+// <View style={styles.loader}> <ActivityIndicator size={75} color='#95a5a6'/>
+//                 <Text style={styles.loaderText}>Analyse en cours...</Text>
 // </View>    : <View style={styles.container}> <AnswerNotification
 // answer={this.state.result}/>    <CaptureAndShare title='Partager'
 // color='#3498db'                        image={sourceImage}

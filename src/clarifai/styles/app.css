@@ -1,0 +1,42 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 220px;
+  -webkit-font-smoothing: antialiased;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: #fff;
+  background-color: #3b3f51;
+}
+
+footer a {
+  color: #fff;
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+footer .thumb-md {
+  border: 1px solid rgba(255,255,255,.15);
+  transition: border .1s linear;
+
+  &:hover {
+    border-color: rgba(255,255,255,.3);
+  }
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}

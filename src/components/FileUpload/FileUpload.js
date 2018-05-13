@@ -1,86 +1,39 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import Dropzone from 'react-dropzone'
+import React, {Component} from 'react';
+import {render} from 'react-dom';
 
-class FileUpload extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            accept: '',
-            files: [],
-            dropzoneActive: false
-        }
+class Main extends Component {
+
+    uploadWidget() {
+        window
+            .cloudinary
+            .openUploadWidget({
+                cloud_name: 'CLOUD_NAME',
+                upload_preset: 'PRESET',
+                tags: ['xmas']
+            }, function (error, result) {
+                console.log(result);
+            });
     }
-
-    onDragEnter() {
-        this.setState({dropzoneActive: true});
-    }
-
-    onDragLeave() {
-        this.setState({dropzoneActive: false});
-    }
-
-    onDrop(files) {
-        this.setState({files, dropzoneActive: false});
-    }
-
-    applyMimeTypes(event) {
-        this.setState({accept: event.target.value});
-    }
-
     render() {
-        const {accept, files, dropzoneActive} = this.state;
-        const overlayStyle = {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            padding: '2.5em 0',
-            background: 'rgba(0,0,0,0.5)',
-            textAlign: 'center',
-            color: '#fff'
-        };
         return (
-            <Dropzone
-                disableClick
-                style={{
-                position: "relative"
-            }}
-                accept={accept}
-                onDrop={this
-                .onDrop
-                .bind(this)}
-                onDragEnter={this
-                .onDragEnter
-                .bind(this)}
-                onDragLeave={this
-                .onDragLeave
-                .bind(this)}>
-                {dropzoneActive && <div style={overlayStyle}>DROP FILES ANYWHERE ON SCREEN TO UPLOAD</div>}
-                <div>
-                    <h1>HEAVYDOODYAI</h1>
-                    <label htmlFor="mimetypes">Enter mime types you want to send:
-                    </label>
-                    <input
-                        type="text"
-                        id="mimetypes"
-                        onChange={this
-                        .applyMimeTypes
-                        .bind(this)}/>
-
-                    <h2>Dropped files</h2>
-                    <ul>
-                        {files.map(f => <li>{f.name}
-                            - {f.size}
-                            bytes</li>)
-}
-                    </ul>
-
+            <div className="main">
+                <h1>Galleria</h1>
+                <div className="upload">
+                    <button
+                        onClick={this
+                        .uploadWidget
+                        .bind(this)}
+                        className="upload-button">
+                        Add Image
+                    </button>
                 </div>
-            </Dropzone>
+            </div>
+
         );
     }
 }
 
-export default FileUpload
+render(
+    <Main/>, document.getElementById('container'));
+
+export default Main
