@@ -5,7 +5,9 @@
   "dependencies": {
     "algoliasearch": "^3.27.1",
     "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
     "clarifai": "^2.7.1",
+    "classnames": "^2.2.5",
     "cors": "^2.8.4",
     "create-react-class": "^15.6.3",
     "express-fileupload": "^0.4.0",
