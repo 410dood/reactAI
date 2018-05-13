@@ -49,7 +49,7 @@ class ViewStateUpload extends ViewStateTemplate {
 
   render() {
     return <div className='view view-upload'>
-      <h1>LetMeSee</h1>
+      <h1>HEAVYDOODYAI</h1>
       <input
         type='file'
         ref='file'
