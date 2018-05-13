@@ -1,22 +1,24 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { predictImage } from '../actions'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {predictImage} from '../actions'
 import LinkWithTooltip from '../components/LinkWithTooltip';
 
 class Predict extends Component {
   componentDidMount() {
     let url = this.props.params.url;
-    const { dispatch } = this.props
+    const {dispatch} = this.props
     dispatch(predictImage(url));
   }
 
-
   render() {
     console.log(this.props);
-    const { concepts } = this.props;
+    const {concepts} = this.props;
     let predictData = concepts.map((data) => {
       return (
-        <tr key={data.id}><td>{data.name}</td><td>{data.value}</td></tr>
+        <tr key={data.id}>
+          <td>{data.name}</td>
+          <td>{data.value}</td>
+        </tr>
       );
     });
 
@@ -30,10 +32,10 @@ class Predict extends Component {
             <div className="table-responsive">
               <table className='table table-striped'>
                 <thead>
-                <tr>
-                  <th colSpan='1'>Classifcation</th>
-                  <th colSpan='1'>Confidence</th>
-                </tr>
+                  <tr>
+                    <th colSpan='1'>Classifcation</th>
+                    <th colSpan='1'>Confidence</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {predictData}
@@ -48,10 +50,8 @@ class Predict extends Component {
 }
 
 const mapStateToProps = state => {
-  const { concepts } = state.predictionReducer;
-  return {
-    concepts
-  }
+  const {concepts} = state.predictionReducer;
+  return {concepts}
 }
 
 export default connect(mapStateToProps)(Predict)
