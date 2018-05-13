@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 class LinkWithTooltip extends Component {
@@ -7,10 +7,8 @@ class LinkWithTooltip extends Component {
 
     return (
       <OverlayTrigger
-        overlay={tooltip}
-        placement="left"
-        delayShow={200}
-        delayHide={150}>
+        overlay={tooltip} placement="left"
+        delayShow={200} delayHide={150}>
         <a href={this.props.href}>{this.props.children}</a>
       </OverlayTrigger>
     );

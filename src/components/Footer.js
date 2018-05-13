@@ -8,10 +8,10 @@ class Footer extends Component {
           <div className='row text-center'>
             <div>
               <h3 className='lead'></h3>
-              <p>
-                <a href='https://github.com/410dood/reactAI'>Source Code</a>
+              <p>HEAVYDOODYWORKS<a href='https://www.heavydoodyworks.com'>Clarifai API</a>.
+                <a href='https://github.com/410dood/HeavydoodyAI'>Source Code</a>
                 © 2018
-                <a href='https://github.com/410dood'>HeavyDoodyWorks</a>.</p>
+                <a href='https://github.com/DrkSephy'>David Leonard</a>.</p>
             </div>
           </div>
         </div>

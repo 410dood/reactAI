@@ -15,7 +15,19 @@ import FileUpload from './components/FileUpload/FileUpload';
 
 import './App.css';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-
+import React from 'react'
+import {render} from 'react-dom'
+import {createStore, applyMiddleware} from 'redux'
+import {Provider} from 'react-redux'
+import thunk from 'redux-thunk'
+import {Router, Route, browserHistory} from 'react-router-dom';
+import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
+import reducer from './reducers'
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+import Predict from './containers/Predict';
+import App from './components/App';
+import Home from './components/Home';
 class App extends Component {
   render() {
     return (
@@ -44,6 +56,12 @@ class App extends Component {
             <li>
               <Link to={'/ImageLinkForm'}>ImageLinkForm</Link>
             </li>
+            <li>
+              <Link to={'/predict'}>ImageLinkForm</Link>
+            </li>
+            <li>
+              <Link to={'/predict/:url'}>ImageLinkForm</Link>
+            </li>
           </ul>
           <hr/>
           <Switch>
@@ -54,6 +72,8 @@ class App extends Component {
             <Route path='/PicLinker' component={PicLinker}/> {/* <Route path='/AI' component={AI}/> */}
             <Route path='/FileUpload' component={FileUpload}/>
             <Route path='/ImageLinkForm' component={ImageLinkForm}/>
+            <Route path='/predict' component={Predict}/>
+            <Route path='/predict/:url' component={Predict}/>
 
           </Switch>
         </div>
