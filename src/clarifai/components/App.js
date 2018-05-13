@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router';
 import Navigation from './Navigation';
 import Footer from './Footer';
@@ -8,9 +8,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navigation/>
-        {this.props.children}
-        <Footer />
+        <Navigation/> {this.props.children}
+        <Footer/>
       </div>
     );
   }
