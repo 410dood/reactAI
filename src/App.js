@@ -1,227 +1,154 @@
-import React, {Component} from 'react'
-import Clarifai from 'clarifai' // AI
+import React, {Component} from 'react';
+import Particles from 'react-particles-js';
 
-import {ViewStateMachine, ViewStateTemplate} from './ViewState.js'
+import Signin from './components/Signin/Signin';
+import Register from './components/Register/Register';
+import Navigation from './components/Navigation/Navigation';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import Rank from './components/Rank/Rank';
+import Demographic from './components/Demographic/Demographic'
+import './App.css';
 
-import './App.css'
-
-var clarifai = new Clarifai.App({ // init Clarifai
-  apiKey: 'bcdc87e24b314c9d9d4dae72d641b65b'
-  //apiKey: process.env.REACT_APP_LMS_CLARIFAI
-})
-
-// -- ERROR STATE -- //
-class ViewStateError extends ViewStateTemplate {
-  render() {
-    return <div className='view view-error'>
-      <h1>Error</h1>
-      <p>{this
-          .props
-          .sm
-          .store('error')}</p>
-      <a
-        className='btn btn-primary'
-        onClick={function () {
-        this
-          .props
-          .sm
-          .state(0)
-      }.bind(this)}>Retry</a>
-    </div>
-  }
-}
-
-// -- UPLOAD STATE -- //
-class ViewStateUpload extends ViewStateTemplate {
-  constructor(props) {
-    super(props)
-
-    this.error = this
-      .error
-      .bind(this)
-    this.readFile = this
-      .readFile
-      .bind(this)
-    this.predict = this
-      .predict
-      .bind(this)
-  }
-
-  render() {
-    return <div className='view view-upload'>
-      <h1>HEAVYDOODYAI</h1>
-      <input
-        type='file'
-        ref='file'
-        accept='image/png, image/jpeg, image/bmp, image/tiff'/><br/><br/>
-      <a
-        className='btn btn-primary'
-        style={{
-        float: 'right',
-        color: 'white'
-      }}
-        onClick={function () {
-        this.readFile()
-      }.bind(this)}>Scan</a>
-      <div style={{
-        clear: 'both'
-      }}/>
-    </div>
-  }
-
-  error(errorMessage) {
-    this
-      .props
-      .sm
-      .store('error', errorMessage, function () {
-        this
-          .props
-          .sm
-          .state(2) // 2 - ViewStateError
-      }.bind(this))
-  }
-
-  predict(media) { // called by this.readFile, sets tags state
-    console.log('Predicting image...')
-    clarifai
-      .models
-      .predict(Clarifai.GENERAL_MODEL, {
-        base64: /data:.*\/.*;base64,(.*)/.exec(media)[1] // data url base64 extraction
-      })
-      .then(function (response) {
-        console.log(response)
-        this
-          .props
-          .sm
-          .store('tags', response.outputs[0].data.concepts, function () {
-            this
-              .props
-              .sm
-              .state(3) // 3 - ViewStatePreview
-          }.bind(this))
-      }.bind(this), function (err) {
-        this.error('Failed to scan the file.')
-        console.error(err)
-      }.bind(this))
-      .catch(function (err) {
-        this.error('Failed to scan the file.')
-        console.error(err)
-      }.bind(this))
-  }
-
-  readFile() {
-    // called by scan button, calls this.predict
-    this
-      .props
-      .sm
-      .state(1) // 1 - ViewStateLoading
-    var files = this.refs.file.files // get files from our input
-    if (files.length < 1) {
-      this.error('Please select a file.')
-      return
-    } else if (files.length > 1) {
-      this.error('Please only select a single file.')
-      return
-    }
-
-    var file = files[0]
-    var reader = new window.FileReader()
-
-    reader.addEventListener('load', function () {
-      this
-        .props
-        .sm
-        .store('media', reader.result, function () {
-          this.predict(this.props.sm.store('media'))
-        }.bind(this))
-    }.bind(this), false)
-
-    reader.addEventListener('error', function (error) {
-      this.error('Failed to read the file.')
-      console.error(error)
-    }.bind(this), false)
-
-    reader.readAsDataURL(file)
-
-    console.log('Reading file...')
-  }
-}
-
-// -- LOADING STATE -- //
-class ViewStateLoading extends ViewStateTemplate {
-  render() {
-    return <div className='loader'/> // basic loader, taken from https://www.w3schools.com/howto/howto_css_loader.asp
-  }
-}
-
-// -- PREVIEW TAG LIST -- //
-class PreviewTags extends Component {
-  constructor(props) {
-    super(props)
-
-    if (!props.tags) {
-      throw new Error('No tags provided.')
+const PARTICLES_OPTIONS = {
+  particles: {
+    number: {
+      value: 80,
+      density: {
+        enable: true,
+        value_area: 800
+      }
     }
   }
+};
 
-  render() {
-    return this
-      .props
-      .tags
-      .map(function (x) {
-        return <li
-          key={x.name}
-          style={{
-          opacity: x.value
-        }}
-          title={`Confidence: ${Math.round(x.value * 100)}%`}>{x.name}</li>
-      })
-  }
-}
-
-// -- PREVIEW STATE -- //
-class ViewStatePreview extends ViewStateTemplate {
-  render() {
-    return <div className='view view-preview'>
-      <img
-        className='scannedImage'
-        src={this
-        .props
-        .sm
-        .store('media')}
-        alt='Uploaded image'/>
-      <ul className='scanTags'>
-        <PreviewTags
-          tags={this
-          .props
-          .sm
-          .store('tags')}/>
-      </ul>
-      <button
-        onClick={function () {
-        this
-          .props
-          .sm
-          .state(0)
-      }.bind(this)}
-        className='btn btn-outline-primary'>Again</button>
-      <div style={{
-        clear: 'both'
-      }}/>
-    </div>
-  }
+const initialState = {
+  input: '',
+  imageURL: '',
+  results: '',
+  box: '',
+  route: 'signin',
+  isSignedIn: false,
+  user: null
 }
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = initialState;
+  }
+
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
+      }
+    })
+  }
+
+  calculateFaceLocation = (response) => {
+    const box = response.outputs[0].data.regions[0].region_info.bounding_box;
+    return {
+      leftCol: box.left_col * 100 + "%",
+      topRow: box.top_row * 100 + "%",
+      rightCol: (1 - box.right_col) * 100 + "%",
+      bottomRow: (1 - box.bottom_row) * 100 + "%"
+    }
+  }
+
+  displayFaceBox = (box) => {
+    this.setState({box: box});
+  }
+
+  displayResults = (response) => {
+    this.setState({results: response.outputs[0].data.regions[0].data.face});
+  }
+
+  onChange = (event) => {
+    this.setState({input: event.target.value})
+  }
+
+  fetchApi = (inputUrl) => {
+    return fetch('https://heavydoodyai-rest.herokuapp.com/imageurl', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({input: inputUrl})
+    }).then(response => response.json());
+  }
+
+  fetchSubmitImage = (userId) => {
+    return fetch('https://heavydoodyai-rest.herokuapp.com/image', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({id: userId})
+    }).then(resp => resp.json());
+  }
+
+  onSubmitImage = () => {
+    this.setState({imageURL: this.state.input});
+    this
+      .fetchApi(this.state.input)
+      .then(response => {
+        if (response) {
+          this
+            .fetchSubmitImage(this.state.user.id)
+            .then(count => this.setState(Object.assign(this.state.user, {entries: count})))
+            .catch(console.log);
+          this.displayResults(response);
+          this.displayFaceBox(this.calculateFaceLocation(response));
+        }
+      })
+      .catch(err => console.err(err.statusText));
+  }
+
+  onRouteChange = route => {
+    if (route === 'signout') {
+      this.setState(initialState);
+    } else if (route === 'home') {
+      this.setState({isSignedIn: true});
+    }
+    this.setState({route: route});
+  }
+
+  stateHandler = (state) => {
+    switch (state) {
+      case 'home':
+        return (
+          <div>
+            <Rank name={this.state.user.name} entries={this.state.user.entries}/>
+            <ImageLinkForm onChange={this.onChange} onSubmit={this.onSubmitImage}/>
+            <Demographic
+              results={this.state.results}
+              box={this.state.box}
+              imageURL={this.state.imageURL}/>
+          </div>
+        );
+      case 'signout':
+      case 'signin':
+        return <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>;
+      case 'register':
+        return <Register onRouteChange={this.onRouteChange}/>;
+      default:
+        return <Signin onRouteChange={this.onRouteChange}/>;
+    }
+  }
+
   render() {
+    const {isSignedIn, route} = this.state;
     return (
-      <React.Fragment>
-        <ViewStateMachine
-          elements={[ < ViewStateUpload />, < ViewStateLoading />, < ViewStateError />, < ViewStatePreview />
-        ]}/> {/* //put something sweet here */}
-      </React.Fragment>
-    )
+      <div className="App">
+        <Particles className="particles" params={PARTICLES_OPTIONS}/>
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/> {this.stateHandler(route)}
+      </div>
+    );
   }
 }
 
-export default App
+export default App;

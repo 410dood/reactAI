@@ -1,0 +1,92 @@
+html, body, #root {
+  height: 100%;
+  padding: 2.5vh 2.5vw;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a.btn {
+  color: white !important;
+}
+
+.view {
+  border: 1px dashed #AFAFAF;
+  padding: 2.5vh 2.5vw;
+}
+
+.view-error {
+  border-color: red;
+  text-align: center;
+}
+
+.view-error a.btn {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.scannedImage {
+  max-height: 25vh;
+  max-width: 100%;
+  display: block;
+  margin: auto;
+  margin-bottom: 2.5vh;
+}
+
+.scanTags {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  max-width: 100%;
+  list-style-type: none;
+}
+
+.scanTags li {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  border-left: 10px black solid;
+  border-radius: 50px;
+  padding-right: 10px;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.scanTags li:not(:last-child) {
+  margin-top: 0.25vh;
+  margin-right: 0.25vw;
+  margin-bottom: 0.25vh;
+}
+
+.view-preview {
+  border-color: lawngreen;
+}
+
+.view-preview button.btn {
+  text-align: center;
+  display: block;
+  margin: 1vh auto 0;
+}
+
