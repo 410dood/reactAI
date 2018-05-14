@@ -20,7 +20,7 @@ class Signin extends Component {
     onSubmitSignIn = (e) => {
         e.preventDefault();
         this.setState({loading: true});
-        fetch('https://heavydoodyai-rest.herokuapp.com//signin', {
+        fetch('https://heavydoodyai-rest.herokuapp.com/signin', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
