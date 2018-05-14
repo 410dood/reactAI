@@ -42,13 +42,6 @@ a.btn {
   100% { transform: rotate(360deg); }
 }
 
-.clarifaiBranding {
-  position: absolute;
-  bottom: 0;
-  width: 50vw;
-  max-width: 150px;
-}
-
 .scannedImage {
   max-height: 25vh;
   max-width: 100%;
@@ -96,3 +89,4 @@ a.btn {
   display: block;
   margin: 1vh auto 0;
 }
+

@@ -49,8 +49,21 @@
 
 
   <div id="container"></div>
-  <!--Bundled file-->
-  <!-- <script src="bundle.js"></script> -->
+
+  <script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCVz885IvQ0qon0yHPB_9Y993g1Nnnut2U",
+      authDomain: "doodcoin-react.firebaseapp.com",
+      databaseURL: "https://doodcoin-react.firebaseio.com",
+      projectId: "doodcoin-react",
+      storageBucket: "doodcoin-react.appspot.com",
+      messagingSenderId: "1012488913251"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script src="bundle.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
       crossorigin="anonymous"></script>
