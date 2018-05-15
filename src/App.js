@@ -10,7 +10,7 @@ import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 import FaceRecognition from './components/facerecognition/face-recognition';
 import SignIn from './components/signin/sign-in';
-import Register from './components/register/register';
+import Register from './components/register/Register';
 import Demographic from './components/Demographic/Demographic'
 import Asian from './components/asian/asian'
 
