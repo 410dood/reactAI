@@ -17,124 +17,119 @@ import FacebookLogin from 'react-facebook-login';
 import {GoogleLogin} from 'react-google-login';
 import config from './config.json';
 
-class App extends Component {
+// clarifai API Key
+const API_KEY = 'bcdc87e24b314c9d9d4dae72d641b65b';
 
-  constructor() {
-    super();
+const app = new Clarifai.App({apiKey: API_KEY});
+
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 50,
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    }
+  }
+}
+
+class App extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      isAuthenticated: false,
-      user: null,
-      token: ''
+      input: '',
+      imageURL: '',
+      results: '',
+      box: {},
+      route: 'signin',
+      isSignedIn: false
     };
   }
 
-  logout = () => {
-    this.setState({isAuthenticated: false, token: '', user: null})
-  };
+  onInputChange = (event) => {
+    this.setState({input: event.target.value});
+  }
 
-  onFailure = (error) => {
-    alert(error);
-  };
+  calculateFaceLocation = (response) => {
+    const box = response.outputs[0].data.regions[0].region_info.bounding_box;
+    return {
+      leftCol: box.left_col * 100 + "%",
+      topRow: box.top_row * 100 + "%",
+      rightCol: (1 - box.right_col) * 100 + "%",
+      bottomRow: (1 - box.bottom_row) * 100 + "%"
+    }
+  }
 
-  twitterResponse = (response) => {
-    const token = response
-      .headers
-      .get('x-auth-token');
-    response
-      .json()
-      .then(user => {
-        if (token) {
-          this.setState({isAuthenticated: true, user, token});
-        }
+  onButtonSubmit = (event) => {
+    this.setState({imageURL: this.state.input});
+    // app.models.predict(Clarifai.FACE_DETECT_MODEL,
+    // this.state.input).then(response =>
+    // this.displayFaceBox(this.calculateFaceLocation(response))).catch(err =>
+    // console.log(err));
+    app
+      .models
+      .predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input)
+      .then(response => {
+        console.log(response);
+        console.log(response.outputs[0].data);
+        console.log(response.outputs[0].data.regions[0].data.face);
+        console.log(response.outputs[0].data.regions[0].data.face.age_appearance);
+        console.log(response.outputs[0].data.regions[0].data.face.age_appearance.concepts[0].name);
+        console.log(response.outputs[0].data.regions[0].data.face.gender_appearance);
+        console.log(response.outputs[0].data.regions[0].data.face.gender_appearance.concepts[0].name);
+
+        console.log(response.outputs[0].data.regions[0].data.face.multicultural_appearance);
+        console.log(response.outputs[0].data.regions[0].data.face.multicultural_appearance.concepts[0].name);
+        this.displayResults(response);
+
+        this.displayFaceBox(this.calculateFaceLocation(response));
+        const appearance = (response.outputs[0].data.regions[0].data.face.multicultural_appearance.concepts[0].name);
+
       });
-  };
 
-  facebookResponse = (response) => {
-    const tokenBlob = new Blob([JSON.stringify({
-        access_token: response.accessToken
-      }, null, 2)], {type: 'application/json'});
-    const options = {
-      method: 'POST',
-      body: tokenBlob,
-      mode: 'cors',
-      cache: 'default'
-    };
-    fetch('http://localhost:4000/api/v1/auth/facebook', options).then(r => {
-      const token = r
-        .headers
-        .get('x-auth-token');
-      r
-        .json()
-        .then(user => {
-          if (token) {
-            this.setState({isAuthenticated: true, user, token})
-          }
-        });
-    })
-  };
+  }
 
-  googleResponse = (response) => {
-    const tokenBlob = new Blob([JSON.stringify({
-        access_token: response.accessToken
-      }, null, 2)], {type: 'application/json'});
-    const options = {
-      method: 'POST',
-      body: tokenBlob,
-      mode: 'cors',
-      cache: 'default'
-    };
-    fetch('http://localhost:4000/api/v1/auth/google', options).then(r => {
-      const token = r
-        .headers
-        .get('x-auth-token');
-      r
-        .json()
-        .then(user => {
-          if (token) {
-            this.setState({isAuthenticated: true, user, token})
-          }
-        });
-    })
-  };
+  displayFaceBox = (box) => {
+    this.setState({box: box});
+  }
+
+  displayResults = (response) => {
+    this.setState({results: response.outputs[0].data.regions[0].data.face});
+  }
+
+  onRouteChange = (route) => {
+    if (route === 'signout') {
+      this.setState({isSignedIn: false});
+    } else if (route === 'home') {
+      this.setState({isSignedIn: true});
+    }
+    this.setState({route: route});
+  }
 
   render() {
-    let content = !!this.state.isAuthenticated
-      ? (
-        <div>
-          <p>Authenticated</p>
-          <div>
-            {this.state.user.email}
-          </div>
-          <div>
-            <button onClick={this.logout} className="button">
-              Log out
-            </button>
-          </div>
-        </div>
-      )
-      : (
-        <div>
-          <TwitterLogin
-            loginUrl="http://localhost:4000/api/v1/auth/twitter"
-            onFailure={this.onFailure}
-            onSuccess={this.twitterResponse}
-            requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse"/>
-          <FacebookLogin
-            appId={config.FACEBOOK_APP_ID}
-            autoLoad={false}
-            fields="name,email,picture"
-            callback={this.facebookResponse}/>
-          <GoogleLogin
-            clientId={config.GOOGLE_CLIENT_ID}
-            buttonText="Login"
-            onSuccess={this.googleResponse}
-            onFailure={this.onFailure}/>
-        </div>
-      );
-
     return (
       <div className="App">
-        {content}
+        <Navigation
+          isSignedIn={this.state.isSignedIn}
+          onRouteChange={this.onRouteChange}/>
+        <Particles className='particles' params={particlesOptions}/> {this.state.route === 'home'
+          ? <div>
+              <Logo/>
+              <Asian/>
+              <ImageLinkForm
+                onButtonSubmit={this.onButtonSubmit}
+                onInputChange={this.onInputChange}/>
+              <Demographic
+                results={this.state.results}
+                box={this.state.box}
+                imageURL={this.state.imageURL}/>
+
+            </div>
+          : (this.state.route === 'signin'
+            ? <SignIn onRouteChange={this.onRouteChange}/>
+            : <Register onRouteChange={this.onRouteChange}/>)
+}
       </div>
     );
   }
