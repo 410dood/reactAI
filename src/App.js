@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
-
 import './App.css';
 import Navigation from './components/navigation/navigation';
 import Logo from './components/logo/logo';
@@ -17,7 +16,7 @@ import Asian from './components/asian/asian'
 // clarifai API Key
 const API_KEY = 'bcdc87e24b314c9d9d4dae72d641b65b';
 
-const app = new Clarifai.App({apiKey: API_KEY});
+const app = new Clarifai.App({ apiKey: API_KEY });
 
 const particlesOptions = {
   particles: {
@@ -45,7 +44,7 @@ class App extends Component {
   }
 
   onInputChange = (event) => {
-    this.setState({input: event.target.value});
+    this.setState({ input: event.target.value });
   }
 
   calculateFaceLocation = (response) => {
@@ -59,7 +58,7 @@ class App extends Component {
   }
 
   onButtonSubmit = (event) => {
-    this.setState({imageURL: this.state.input});
+    this.setState({ imageURL: this.state.input });
     // app.models.predict(Clarifai.FACE_DETECT_MODEL,
     // this.state.input).then(response =>
     // this.displayFaceBox(this.calculateFaceLocation(response))).catch(err =>
@@ -88,20 +87,20 @@ class App extends Component {
   }
 
   displayFaceBox = (box) => {
-    this.setState({box: box});
+    this.setState({ box: box });
   }
 
   displayResults = (response) => {
-    this.setState({results: response.outputs[0].data.regions[0].data.face});
+    this.setState({ results: response.outputs[0].data.regions[0].data.face });
   }
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState({isSignedIn: false});
+      this.setState({ isSignedIn: false });
     } else if (route === 'home') {
-      this.setState({isSignedIn: true});
+      this.setState({ isSignedIn: true });
     }
-    this.setState({route: route});
+    this.setState({ route: route });
   }
 
   render() {
@@ -109,25 +108,25 @@ class App extends Component {
       <div className="App">
         <Navigation
           isSignedIn={this.state.isSignedIn}
-          onRouteChange={this.onRouteChange}/>
-        <Particles className='particles' params={particlesOptions}/> {this.state.route === 'home'
+          onRouteChange={this.onRouteChange} />
+        <Particles className='particles' params={particlesOptions} /> {this.state.route === 'home'
           ? <div>
-              <Logo/>
-              <Asian/>
-              <ImageLinkForm>
-                onButtonSubmit={this.onButtonSubmit}
-                onInputChange={this.onInputChange}
-              </ImageLinkForm>
-              <Demographic
-                results={this.state.results}
-                box={this.state.box}
-                imageURL={this.state.imageURL}/>
+            <Logo />
+            <Asian />
+            <ImageLinkForm>
+              onButtonSubmit={this.onButtonSubmit}
+              onInputChange={this.onInputChange}
+            </ImageLinkForm>
+            <Demographic
+              results={this.state.results}
+              box={this.state.box}
+              imageURL={this.state.imageURL} />
 
-            </div>
+          </div>
           : (this.state.route === 'signin'
-            ? <SignIn onRouteChange={this.onRouteChange}/>
-            : <Register onRouteChange={this.onRouteChange}/>)
-}
+            ? <SignIn onRouteChange={this.onRouteChange} />
+            : <Register onRouteChange={this.onRouteChange} />)
+        }
       </div>
     );
   }
