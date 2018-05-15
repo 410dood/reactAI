@@ -9,8 +9,9 @@ import Clarifai from 'clarifai';
 import FaceRecognition from './components/facerecognition/face-recognition';
 import SignIn from './components/signin/sign-in';
 import Register from './components/register/register';
-import Demographic from './components/Demographic/Demographic'
-import Asian from './components/asian/asian'
+import Demographic from './components/Demographic/Demographic';
+import Asian from './components/asian/asian';
+import Hotdog from './components/hotdog/hotdog';
 
 // clarifai API Key
 const API_KEY = 'bcdc87e24b314c9d9d4dae72d641b65b';
@@ -110,6 +111,7 @@ class App extends Component {
           onRouteChange={this.onRouteChange} />
         <Particles className='particles' params={particlesOptions} /> {this.state.route === 'home'
           ? <div>
+            <Hotdog />
             <Logo />
             <Asian />
             <ImageLinkForm
