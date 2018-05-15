@@ -13,6 +13,7 @@ const ImageLinkForm = (props) => {
           <input
             onChange={props.onInputChange}
             className='f4 pa2 w-70 center'
+            placeholder='ENTER AN IMAGE URL ADDRESS AND PRESS DETECT'
             type='text'/>
           <button
             onClick={props.onButtonSubmit}
