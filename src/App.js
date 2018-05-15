@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import Navigation from './components/navigation/navigation';
 import Logo from './components/logo/Logo';
@@ -21,10 +20,10 @@ const app = new Clarifai.App({ apiKey: API_KEY });
 const particlesOptions = {
   particles: {
     number: {
-      value: 50,
+      value: 60,
       density: {
         enable: true,
-        value_area: 800
+        value_area: 900
       }
     }
   }
