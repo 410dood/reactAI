@@ -12,8 +12,8 @@ const Logo = () => {
           max: 55
         }}
         style={{
-          height: 190,
-          width: 190
+          height: 250,
+          width: 250
         }}>
         <div className="Tilt-inner pa3">
           <img src={hdwlogo} alt='heavydoodyworksai logo' />
