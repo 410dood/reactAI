@@ -1,24 +1,30 @@
 import React from 'react';
-import Logo from '../Logo/Logo';
-import 'tachyons';
 
-import './Navigation.css';
-
-const Navigation = ({ onRouteChange, isSignedIn }) => {
-    if(isSignedIn) {
-        return (
-            <nav className="container">
-                <Logo />
-                <p onClick={() => onRouteChange('signout')} className='f3 link dim navy underline pointer'>Sign Out</p>
-            </nav>
-        );
-    } else {
-        return (
-            <nav className="container">
-                <Logo />
-            </nav>
-        );
-    }
-}
+const Navigation = (props) => {
+  if (props.isSignedIn) {
+    return(
+    <nav style={{
+        display: 'flex',
+        justifyContent: 'flex-end'
+      }}>
+      <p onClick={() => props.onRouteChange('signout')} className='f3 pa3 pointer link dim black underline '>
+        Sign Out
+      </p>
+    </nav>
+  );} else {
+    return(
+    <nav style={{
+        display: 'flex',
+        justifyContent: 'flex-end'
+      }}>
+      <p onClick={() => props.onRouteChange('signin')} className='f3 pa3 pointer link dim black underline '>
+        Sign In
+      </p>
+      <p onClick={() => props.onRouteChange('register')} className='f3 pa3 pointer link dim black underline '>
+        Register
+      </p>
+    </nav>
+  );};
+};
 
 export default Navigation;

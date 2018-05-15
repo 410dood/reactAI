@@ -17,6 +17,10 @@
     animation: fadein 1.5s;
 }
 
+.asian {
+    position: relative;
+}
+
 .list-values {
     animation: fadein 1.5s;
 }

@@ -1,16 +1,11 @@
-.image-link-form {
-    display: inline-block;
-    margin-bottom: 4rem;
-}
-
-.intro {
-    font-variant: small-caps;
-}
-
-.input-form {
-    display: flex;
-}
-
-button {
-    border: 0px;
+.form {
+  width: 700px;
+  background:
+  radial-gradient(circle farthest-side at 0% 50%,#a1c4fd 23.5%,rgba(240,166,17,0) 0)21px 30px,
+  radial-gradient(circle farthest-side at 0% 50%,rgb(4, 13, 20)  24%,rgba(240,166,17,0) 0)19px 30px,
+  linear-gradient(#a1c4fd 14%,rgba(240,166,17,0) 0, rgba(240,166,17,0) 85%,#a1c4fd 0)0 0,
+  linear-gradient(150deg,#a1c4fd 24%,rgb(4, 13, 20) 0,rgb(4, 13, 20)  26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,rgb(4, 13, 20)  0,rgb(4, 13, 20)  76%,#a1c4fd 0)0 0,
+  linear-gradient(30deg,#a1c4fd 24%,rgb(4, 13, 20)  0,rgb(4, 13, 20)  26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,rgb(4, 13, 20)  0,rgb(4, 13, 20)  76%,#a1c4fd 0)0 0,
+  linear-gradient(90deg,rgb(4, 13, 20)  2%,#a1c4fd 0,#a1c4fd 98%,rgb(4, 13, 20)  0%)0 0 #a1c4fd;
+  background-size:40px 60px;
 }

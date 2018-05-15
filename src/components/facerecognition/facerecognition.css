@@ -1,0 +1,36 @@
+.bounding-box {
+  position: absolute;
+  box-shadow: 0 0 0 3px #149df2 inset;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.asian {
+  position: block;
+  background: gray;
+  padding: 30px;
+  overflow: hidden;
+}
+
+.asian:before, .asian:after {
+  position: absolute;
+  content: '';
+  background: red;
+  display: block;
+  width: 100%;
+  height: 30px;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.asian:after {
+  -webkit-transform: rotate(45deg);  
+  transform: rotate(45deg);
+}
