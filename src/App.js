@@ -114,9 +114,10 @@ class App extends Component {
           ? <div>
               <Logo/>
               <Asian/>
-              <ImageLinkForm
+              <ImageLinkForm>
                 onButtonSubmit={this.onButtonSubmit}
-                onInputChange={this.onInputChange}/> {/* <FaceRecognition box={this.state.box} imageURL={this.state.imageURL}/> */}
+                onInputChange={this.onInputChange}
+              </ImageLinkForm>
               <Demographic
                 results={this.state.results}
                 box={this.state.box}
