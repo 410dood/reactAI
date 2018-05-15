@@ -5,9 +5,9 @@ const Navigation = (props) => {
     return (
       <nav
         style={{
-        display: 'flex',
-        justifyContent: 'flex-end'
-      }}>
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
         <p
           onClick={() => props.onRouteChange('signout')}
           className='f3 pa3 pointer link dim black underline '>
@@ -19,9 +19,9 @@ const Navigation = (props) => {
     return (
       <nav
         style={{
-        display: 'flex',
-        justifyContent: 'flex-end'
-      }}>
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
         <p
           onClick={() => props.onRouteChange('signin')}
           className='f3 pa3 pointer link dim black underline '>
