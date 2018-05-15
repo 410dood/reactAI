@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Navigation from './components/navigation/navigation';
-import Logo from './components/logo/logo';
-import ImageLinkForm from './components/imagelinkform/imagelinkform';
+import Logo from './components/logo/Logo';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/rank/rank';
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
@@ -39,7 +39,7 @@ class App extends Component {
       results: '',
       box: {},
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: true
     };
   }
 
@@ -59,10 +59,10 @@ class App extends Component {
 
   onButtonSubmit = (event) => {
     this.setState({ imageURL: this.state.input });
-    // app.models.predict(Clarifai.FACE_DETECT_MODEL,
-    // this.state.input).then(response =>
-    // this.displayFaceBox(this.calculateFaceLocation(response))).catch(err =>
-    // console.log(err));
+    app.models.predict(Clarifai.FACE_DETECT_MODEL,
+      this.state.input).then(response =>
+        this.displayFaceBox(this.calculateFaceLocation(response))).catch(err =>
+          console.log(err));
     app
       .models
       .predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input)
@@ -113,15 +113,13 @@ class App extends Component {
           ? <div>
             <Logo />
             <Asian />
-            <ImageLinkForm>
+            <ImageLinkForm
               onButtonSubmit={this.onButtonSubmit}
-              onInputChange={this.onInputChange}
-            </ImageLinkForm>
+              onInputChange={this.onInputChange} />
             <Demographic
               results={this.state.results}
               box={this.state.box}
               imageURL={this.state.imageURL} />
-
           </div>
           : (this.state.route === 'signin'
             ? <SignIn onRouteChange={this.onRouteChange} />

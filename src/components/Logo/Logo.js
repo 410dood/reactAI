@@ -9,14 +9,14 @@ const Logo = () => {
       <Tilt
         className="Tilt br2 shadow-2"
         options={{
-        max: 55
-      }}
+          max: 55
+        }}
         style={{
-        height: 190,
-        width: 190
-      }}>
+          height: 190,
+          width: 190
+        }}>
         <div className="Tilt-inner pa3">
-          <img src={hdwlogo} alt='heavydoodyworksai logo'/>
+          <img src={hdwlogo} alt='heavydoodyworksai logo' />
         </div>
       </Tilt>
     </div>
