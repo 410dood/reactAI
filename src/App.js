@@ -1,131 +1,85 @@
 import React, { Component } from 'react';
-import './App.css';
-import Navigation from './components/Navigation/Navigation';
-import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import Rank from './components/Rank/Rank';
-import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
-import FaceRecognition from './components/facerecognition/face-recognition';
-import SignIn from './components/signin/sign-in';
-import Register from './components/Register/Register';
-import Demographic from './components/Demographic/Demographic';
-import Asian from './components/asian/asian';
-import Hotdog from './components/hotdog/hotdog';
-
-// clarifai API Key
-const API_KEY = 'bcdc87e24b314c9d9d4dae72d641b65b';
-
-const app = new Clarifai.App({ apiKey: API_KEY });
-
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 60,
-      density: {
-        enable: true,
-        value_area: 900
-      }
-    }
-  }
-}
-
+import axios from 'axios'
+import { Route, Link } from 'react-router-dom'
+// components
+import Signup from './components/sign-up'
+import LoginForm from './components/login-form'
+import Navbar from './components/navbar'
+import Home from './components/home'
+import Heavydoodyai from './components/heavydoodyai'
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super()
     this.state = {
-      input: '',
-      imageURL: '',
-      results: '',
-      box: {},
-      route: 'signin',
-      isSignedIn: true
-    };
-  }
-
-  onInputChange = (event) => {
-    this.setState({ input: event.target.value });
-  }
-
-  calculateFaceLocation = (response) => {
-    const box = response.outputs[0].data.regions[0].region_info.bounding_box;
-    return {
-      leftCol: box.left_col * 100 + "%",
-      topRow: box.top_row * 100 + "%",
-      rightCol: (1 - box.right_col) * 100 + "%",
-      bottomRow: (1 - box.bottom_row) * 100 + "%"
+      loggedIn: false,
+      username: null
     }
+
+    this.getUser = this.getUser.bind(this)
+    this.componentDidMount = this.componentDidMount.bind(this)
+    this.updateUser = this.updateUser.bind(this)
   }
 
-  onButtonSubmit = (event) => {
-    this.setState({ imageURL: this.state.input });
-    app.models.predict(Clarifai.FACE_DETECT_MODEL,
-      this.state.input).then(response =>
-        this.displayFaceBox(this.calculateFaceLocation(response))).catch(err =>
-          console.log(err));
-    app
-      .models
-      .predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input)
-      .then(response => {
-        console.log(response);
-        console.log(response.outputs[0].data);
-        console.log(response.outputs[0].data.regions[0].data.face);
-        console.log(response.outputs[0].data.regions[0].data.face.age_appearance);
-        console.log(response.outputs[0].data.regions[0].data.face.age_appearance.concepts[0].name);
-        console.log(response.outputs[0].data.regions[0].data.face.gender_appearance);
-        console.log(response.outputs[0].data.regions[0].data.face.gender_appearance.concepts[0].name);
-
-        console.log(response.outputs[0].data.regions[0].data.face.multicultural_appearance);
-        console.log(response.outputs[0].data.regions[0].data.face.multicultural_appearance.concepts[0].name);
-        this.displayResults(response);
-
-        this.displayFaceBox(this.calculateFaceLocation(response));
-        const appearance = (response.outputs[0].data.regions[0].data.face.multicultural_appearance.concepts[0].name);
-
-      });
-
+  componentDidMount() {
+    this.getUser()
   }
 
-  displayFaceBox = (box) => {
-    this.setState({ box: box });
+  updateUser(userObject) {
+    this.setState(userObject)
   }
 
-  displayResults = (response) => {
-    this.setState({ results: response.outputs[0].data.regions[0].data.face });
-  }
+  getUser() {
+    axios.get('/user/').then(response => {
+      console.log('Get user response: ')
+      console.log(response.data)
+      if (response.data.user) {
+        console.log('Get User: There is a user saved in the server session: ')
 
-  onRouteChange = (route) => {
-    if (route === 'signout') {
-      this.setState({ isSignedIn: false });
-    } else if (route === 'home') {
-      this.setState({ isSignedIn: true });
-    }
-    this.setState({ route: route });
+        this.setState({
+          loggedIn: true,
+          username: response.data.user.username
+        })
+      } else {
+        console.log('Get user: no user');
+        this.setState({
+          loggedIn: false,
+          username: null
+        })
+      }
+    })
   }
 
   render() {
     return (
       <div className="App">
-        <Navigation
-          isSignedIn={this.state.isSignedIn}
-          onRouteChange={this.onRouteChange} />
-        <Particles className='particles' params={particlesOptions} /> {this.state.route === 'home'
-          ? <div>
-            <Hotdog />
-            <Logo />
-            <Asian />
-            <ImageLinkForm
-              onButtonSubmit={this.onButtonSubmit}
-              onInputChange={this.onInputChange} />
-            <Demographic
-              results={this.state.results}
-              box={this.state.box}
-              imageURL={this.state.imageURL} />
-          </div>
-          : (this.state.route === 'signin'
-            ? <SignIn onRouteChange={this.onRouteChange} />
-            : <Register onRouteChange={this.onRouteChange} />)
+
+        <Navbar updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
+        {/* greet user if logged in: */}
+        {this.state.loggedIn &&
+          <p>Join the party, {this.state.username}!</p>
         }
+        {/* Routes to different components */}
+        <Route
+          exact path="/"
+          component={Home} />
+        <Route
+          exact path="/heavydoodyai"
+          component={Heavydoodyai} />
+        <Route
+          path="/login"
+          render={() =>
+            <LoginForm
+              updateUser={this.updateUser}
+            />}
+        />
+        <Route
+          path="/signup"
+          render={() =>
+            <Signup
+              signup={this.signup}
+            />}
+        />
+
       </div>
     );
   }
