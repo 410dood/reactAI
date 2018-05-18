@@ -1,6 +1,6 @@
 import React from 'react';
 import Tilt from 'react-tilt';
-import './logo.css';
+import './Logo.css';
 import hdwlogo from './hdwlogo.png';
 
 const Logo = () => {

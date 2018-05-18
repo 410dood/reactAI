@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import Navigation from './components/navigation/navigation';
-import Logo from './components/logo/Logo';
+import Navigation from './components/Navigation/Navigation';
+import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import Rank from './components/rank/rank';
+import Rank from './components/Rank/Rank';
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 import FaceRecognition from './components/facerecognition/face-recognition';
 import SignIn from './components/signin/sign-in';
-import Register from './components/register/register';
+import Register from './components/Register/Register';
 import Demographic from './components/Demographic/Demographic';
 import Asian from './components/asian/asian';
 import Hotdog from './components/hotdog/hotdog';
