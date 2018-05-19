@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import './App.css';
+import '../App.css';
 // import Navigation from '../components/Navigation/Navigation';
 import Logo from '../components/Logo/Logo';
 import ImageLinkForm from '../components/ImageLinkForm/ImageLinkForm';
@@ -97,10 +97,9 @@ class Heavydoodyai extends Component {
         return (
             <div className="App">
                 <Particles className='particles' params={particlesOptions} />
-
-                <Hotdog />
+                {/* <Hotdog />
                 <Logo />
-                <Asian />
+                <Asian /> */}
                 <ImageLinkForm
                     onButtonSubmit={this.onButtonSubmit}
                     onInputChange={this.onInputChange} />

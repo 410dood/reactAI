@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Route, Link } from 'react-router-dom';
 import logo from '../logo.svg';
+import Logo from '../heavydoodyworks.svg';
+
 import '../App.css';
 import axios from 'axios';
 
@@ -61,9 +63,9 @@ class Navbar extends Component {
                             )}
                     </div>
                     <div className="col-4 col-mr-auto">
-                        <div id="top-filler"></div>
-                        <img src={logo} className="App-logo" alt="logo" />
-                        <h1 className="App-title">HeavyDoodyAI</h1>
+                        {/* <div id="top-filler"></div> */}
+                        <img src={Logo} className="App-logo" alt="logo" />
+                        {/* <h1 className="App-title">HeavyDoodyAI</h1> */}
                     </div>
                 </header>
             </div>

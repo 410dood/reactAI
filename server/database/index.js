@@ -4,7 +4,8 @@ mongoose.Promise = global.Promise
 
 //your local database url
 //27017 is the default mongoDB port
-const uri = 'mongodb://localhost:27017/heavydoodyai-db'
+// const uri = 'mongodb://localhost:27017/heavydoodyai-db'
+const uri = 'mongodb://admin:password@ds019638.mlab.com:19638/heavydoodyai-db';
 
 mongoose.connect(uri).then(
     () => {
