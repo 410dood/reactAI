@@ -4,23 +4,23 @@ import './Logo.css';
 import hdwlogo from './hdwlogo.png';
 
 const Logo = () => {
-  return (
-    <div className='ma4 mt0 center'>
-      <Tilt
-        className="Tilt br2 shadow-2"
-        options={{
-          max: 55
-        }}
-        style={{
-          height: 250,
-          width: 250
-        }}>
-        <div className="Tilt-inner pa3">
-          <img src={hdwlogo} alt='heavydoodyworksai logo' />
+    return (
+        <div className='left'>
+            <Tilt
+                className="Tilt br2 shadow-2"
+                options={{
+                    max: 55
+                }}
+                style={{
+                    height: 50,
+                    width: 50
+                }}>
+                <div className="Tilt-inner pa3">
+                    <img src={hdwlogo} alt='heavydoodyworksai logo' />
+                </div>
+            </Tilt>
         </div>
-      </Tilt>
-    </div>
-  );
+    );
 };
 
 export default Logo;
