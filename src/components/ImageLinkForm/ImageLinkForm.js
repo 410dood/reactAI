@@ -5,8 +5,7 @@ const ImageLinkForm = (props) => {
   return (
     <div>
       <p className='f3'>
-        This magic box will detect the age of Asian's. Because we all know Steve's like 45
-      </p>
+        Enter an URL      </p>
       <div className='center'>
         <div className='form center pa4 br3 shadow-5'>
           <input
