@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 
 import './App.css';
-import Navigation from './components/navigation/navigation';
-import Logo from './components/logo/logo';
-import ImageLinkForm from './components/imagelinkform/imagelinkform';
-import Rank from './components/rank/rank';
+import Navigation from './components/navigation/Navigation';
+import Logo from './components/logo/Logo';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 import FaceRecognition from './components/facerecognition/face-recognition';
-import SignIn from './components/signin/sign-in';
-import Register from './components/register/Register';
+// import SignIn from './components/signin/sign-in';
+// import Register from './components/register/Register';
 import Demographic from './components/Demographic/Demographic'
 import Asian from './components/asian/asian'
 
@@ -39,8 +38,8 @@ class App extends Component {
       imageURL: '',
       results: '',
       box: {},
-      route: 'signin',
-      isSignedIn: false
+      route: 'home',
+      // isSignedIn: false
     };
   }
 
@@ -95,23 +94,23 @@ class App extends Component {
     this.setState({ results: response.outputs[0].data.regions[0].data.face });
   }
 
-  onRouteChange = (route) => {
-    if (route === 'signout') {
-      this.setState({ isSignedIn: false });
-    } else if (route === 'home') {
-      this.setState({ isSignedIn: true });
-    }
-    this.setState({ route: route });
-  }
+  // onRouteChange = (route) => {
+  //   if (route === 'signout') {
+  //     this.setState({ isSignedIn: false });
+  //   } else if (route === 'home') {
+  //     this.setState({ isSignedIn: true });
+  //   }
+  //   this.setState({ route: route });
+  // }
 
   render() {
     return (
       <div className="App">
-        <Navigation
-          isSignedIn={this.state.isSignedIn}
-          onRouteChange={this.onRouteChange} />
-        <Particles className='particles' params={particlesOptions} /> {this.state.route === 'home'
-          ? <div>
+        {/* <Navigation></Navigation> */}
+          {/* isSignedIn={this.state.isSignedIn} */}
+          {/* onRouteChange={this.onRouteChange} /> */}
+        <Particles className='particles' params={particlesOptions} /> {this.state.route === 'home'}
+           <div>
             <Logo />
             <Asian />
             <ImageLinkForm
@@ -123,9 +122,9 @@ class App extends Component {
               imageURL={this.state.imageURL} />
 
           </div>
-          : (this.state.route === 'signin'
+          {/* : (this.state.route === 'signin'
             ? <SignIn onRouteChange={this.onRouteChange} />
-            : <Register onRouteChange={this.onRouteChange} />)
+            : <Register onRouteChange={this.onRouteChange} />) */}
         }
       </div>
     );

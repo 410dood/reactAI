@@ -1,5 +1,5 @@
 import React from 'react';
-import './imagelinkform.css';
+import './ImageLinkForm.css';
 
 const ImageLinkForm = (props) => {
   return (
@@ -14,7 +14,7 @@ const ImageLinkForm = (props) => {
             onChange={props.onInputChange}
             className='f4 pa2 w-70 center'
             placeholder='ENTER AN IMAGE URL ADDRESS AND PRESS DETECT'
-            type='text'/>
+            type='text' />
           <button
             onClick={props.onButtonSubmit}
             className='w-40 grow f4 link ph3 pv2 dib white bg-light-purple'>Detect</button>
